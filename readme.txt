@@ -1,6 +1,6 @@
-=== YCP Checkout Купить в 1 клик ===
-Contributors: perfinn
-Tags: yandex, ycp, checkout, marketplace, integration
+=== Perfinn YCP Checkout для Яндекса ===
+Contributors: qqqyr, perfinn
+Tags: ycp, checkout, marketplace, integration, ecommerce
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.4
@@ -8,7 +8,9 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Полная интеграция WooCommerce с Яндекс Чекаутом по протоколу YCP. Заказы из Яндекса автоматически создаются в WooCommerce.
+Неофициальная интеграция магазина с Яндекс Чекаутом по протоколу YCP. Заказы из Яндекса автоматически создаются в магазине.
+
+Этот плагин не связан с компанией Yandex и не является официальным продуктом. Он разработан независимым разработчиком Perfinn для интеграции магазина с публичным API Yandex Commerce Protocol.
 
 == Description ==
 

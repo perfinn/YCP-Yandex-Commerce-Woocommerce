@@ -1,15 +1,15 @@
 <?php
 /**
- * Plugin Name: YCP Checkout Купить в 1 клик
- * Plugin URI:  https://github.com/perfinn/YCP-Yandex-Commerce-Woocommerce
- * Description: Интеграция магазина с Яндекс Чекаутом по протоколу YCP. Все 10 эндпоинтов API v1, автосоздание заказов, лог запросов.
+ * Plugin Name: Perfinn YCP Checkout для Яндекса
+ * Plugin URI:  https://github.com/perfinn/perfinn-ycp-checkout
+ * Description: Неофициальная интеграция магазина с Яндекс Чекаутом по протоколу YCP. Все 10 эндпоинтов API v1, автосоздание заказов, лог запросов. Плагин не связан с компанией Yandex.
  * Version:     1.0.0
  * Author:      Perfinn
  * Author URI:  https://perfinn.ru
  * Support:     info@perfinn.ru
  * License:     GPL-2.0+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain: ycp-checkout
+ * Text Domain: perfinn-ycp-checkout
  * Requires at least: 5.8
  * Requires PHP: 7.4
  * WC requires at least: 6.0
@@ -40,7 +40,7 @@ class YCP_Yandex_Commerce_Woo
 
     public static function load_textdomain(): void
     {
-        load_plugin_textdomain('ycp-checkout', false, dirname(plugin_basename(__FILE__)) . '/languages');
+        load_plugin_textdomain('perfinn-ycp-checkout', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
     public static function menu(): void
@@ -115,11 +115,20 @@ class YCP_Yandex_Commerce_Woo
             $action = trim(str_replace('/' . self::ENDPOINT, '', $req_path), '/');
         }
 
+        // Читаем тело запроса (Yandex YCP отправляет JSON). Жёстко ограничиваем длину,
+        // отбрасываем непечатные байты и тэги — то, что попадёт в лог и БД, гарантированно безопасно.
         $body_raw = (string) file_get_contents('php://input');
-        $body     = json_decode($body_raw, true);
+        if (strlen($body_raw) > 100000) {
+            $body_raw = substr($body_raw, 0, 100000);
+        }
+        $body = json_decode($body_raw, true);
+
+        // Для логирования — отдельная sanitized-копия (никогда не парсится повторно)
+        $body_log = wp_check_invalid_utf8(wp_strip_all_tags($body_raw), true);
+        $body_log = mb_substr((string) $body_log, 0, 4000, 'UTF-8');
 
         // Лог запроса
-        self::log_entry($method, $action, $bearer ? '***' . substr($bearer, -6) : 'no-token', $body_raw);
+        self::log_entry($method, $action, $bearer ? '***' . substr($bearer, -6) : 'no-token', $body_log);
 
         // Проверка токена (constant-time)
         if (!$bearer || !hash_equals($token, $bearer)) {
@@ -566,7 +575,7 @@ class YCP_Yandex_Commerce_Woo
 
     public static function render_page(): void
     {
-        if (!current_user_can('manage_options')) wp_die(esc_html__('Access denied', 'ycp-checkout'));
+        if (!current_user_can('manage_options')) wp_die(esc_html__('Access denied', 'perfinn-ycp-checkout'));
         $token = (string) get_option(self::OPT_TOKEN, '');
         $endpoint_url = home_url('/' . self::ENDPOINT . '/');
         $log = (array) get_option(self::OPT_LOG, []);

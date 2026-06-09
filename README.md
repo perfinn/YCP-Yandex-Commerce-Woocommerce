@@ -1,7 +1,9 @@
-# YCP Checkout Купить в 1 клик
+# Perfinn YCP Checkout для Яндекса
 
-> Полная интеграция **WooCommerce** с **Яндекс Чекаутом** по официальному протоколу [Yandex Commerce Protocol (YCP)](https://yandex.ru/support/merchants-ru-ycp/).
+> Неофициальная интеграция **WooCommerce** с **Яндекс Чекаутом** по протоколу [Yandex Commerce Protocol (YCP)](https://yandex.ru/support/merchants-ru-ycp/).
 > Покупатель оформляет заказ в виджете Яндекса — заказ автоматически создаётся в вашей WooCommerce.
+>
+> ⚠️ Этот плагин разработан независимым разработчиком **Perfinn** и не связан с компанией Yandex / Яндекс.
 
 [![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-blue.svg)](https://wordpress.org)
 [![WooCommerce](https://img.shields.io/badge/WooCommerce-6.0%2B-96588a.svg)](https://woocommerce.com)

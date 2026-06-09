@@ -1,5 +1,5 @@
-YCP Checkout Купить в 1 клик
-Copyright (C) 2026 Perfinn
+Perfinn YCP Checkout для Яндекса
+Copyright (C) 2026 Perfinn (Парахин Никита Леонидович, ИП)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
